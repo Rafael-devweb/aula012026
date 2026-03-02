@@ -3,9 +3,9 @@
 import React from 'react';
 
 const COLUMNS = [
-  { id: 'queue', label: 'Na Fila', color: 'border-slate-700' },
-  { id: 'progress', label: 'Em Reparo', color: 'border-emerald-500' },
-  { id: 'done', label: 'Finalizado', color: 'border-slate-500' },
+  { id: 'queue', label: 'Na Fila', color: 'border-red-600' },
+  { id: 'progress', label: 'Em Reparo', color: 'border-yellow-500' },
+  { id: 'done', label: 'Finalizado', color: 'border-emerald-500' },
 ];
 
 export default function KanbanPage() {
@@ -13,7 +13,7 @@ export default function KanbanPage() {
     <div className="space-y-8">
       <header className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-black uppercase italic text-white tracking-tighter">
+          <h1 className="text-3xl font-black uppercase italic text-slate-500">
             Quadro de <span className="text-emerald-500">Serviços</span>
           </h1>
           <p className="text-slate-500 text-sm uppercase font-bold tracking-widest">Fluxo de trabalho em tempo real</p>

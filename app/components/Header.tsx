@@ -23,7 +23,7 @@ return (
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-slate-100 font-black italic text-xl tracking-tighter uppercase">
-              Mecanica <span className="text-emerald-500">Green</span>
+              Auto <span className="text-emerald-500">Fix</span>
             </span>
             <span className="text-slate-500 text-[10px] font-bold tracking-[0.2em] uppercase mt-1">
               Precision Service
