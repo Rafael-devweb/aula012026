@@ -45,7 +45,38 @@ export default function KanbanPage() {
                 <span className="text-emerald-500 font-mono text-xs font-bold">R$ 4.200</span>
               </div>
             </div>
-          </div>
+
+              <div className="bg-slate-950 border border-slate-800 p-4 rounded-lg shadow-lg group cursor-grab active:cursor-grabbing hover:border-emerald-500/50 transition-all">
+              <div className="flex justify-between items-start mb-3">
+                <span className="bg-slate-900 text-emerald-500 text-[10px] px-2 py-1 rounded font-mono border border-slate-800">
+                  BRA2E19
+                </span>
+                <span className="text-slate-600 text-[10px] font-bold">27 Fev</span>
+              </div>
+              <h3 className="text-white font-bold text-sm uppercase leading-tight group-hover:text-emerald-400">Troca de Oleo</h3>
+              <p className="text-slate-500 text-xs mt-1 italic">BMW M3 Competition</p>
+              <div className="mt-4 pt-4 border-t border-slate-900 flex justify-between items-center">
+                <span className="text-slate-400 text-[10px] font-bold uppercase">joao santos</span>
+                <span className="text-emerald-500 font-mono text-xs font-bold">R$400</span>
+                 </div>
+            </div>
+      
+                <div className="bg-slate-950 border border-slate-800 p-4 rounded-lg shadow-lg group cursor-grab active:cursor-grabbing hover:border-emerald-500/50 transition-all">
+              <div className="flex justify-between items-start mb-3">
+                <span className="bg-slate-900 text-emerald-500 text-[10px] px-2 py-1 rounded font-mono border border-slate-800">
+                  BRA2E19
+                </span>
+                <span className="text-slate-600 text-[10px] font-bold">27 Fev</span>
+              </div>
+              <h3 className="text-white font-bold text-sm uppercase leading-tight group-hover:text-emerald-400">Troca de Pneus</h3>
+              <p className="text-slate-500 text-xs mt-1 italic">BMW M3 Competition</p>
+              <div className="mt-4 pt-4 border-t border-slate-900 flex justify-between items-center">
+                <span className="text-slate-400 text-[10px] font-bold uppercase">Renan Candido</span>
+                <span className="text-emerald-500 font-mono text-xs font-bold">R$ 10.200</span>
+              </div>
+            </div>
+              </div>
+          
         ))}
       </div>
     </div>

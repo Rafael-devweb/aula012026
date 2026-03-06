@@ -88,7 +88,7 @@ export default function Home() {
               </div>
               {/* Botão de Ação CTA (Call to Action) */}
               <Link
-                href="/solucoes"
+                href="/login"
                 className="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black uppercase py-4 rounded-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-3 group/btn no-underline"
               >
                 Explorar Soluções
