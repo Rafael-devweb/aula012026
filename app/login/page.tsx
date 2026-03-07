@@ -1,36 +1,46 @@
 'use client'
 
 import { useRouter } from "next/navigation";
+import { useAuth, Usuario } from "../context/AuthContext";
 
 export default function LoginPage() {
     const router = useRouter();
+    const { login } = useAuth();
 
-    const handlelogin = async (FormData: FormData) => {
+    const handlelogin = async (formData: FormData) => {
+        // 1. Corrigido para bater com o 'name' do input
+        const email = formData.get("email") as string;
+        const senha = formData.get("password") as string; 
 
-        const email = FormData.get("email");
-        const senha = FormData.get("aenha");
+        try {
+            // Simulando validação na API
+            // 2. Corrigida a variável para evitar erro de referência (usurioMock -> usuarioMock)
+            const usuarioMock = new Usuario(1, "Rafael Cândido");
+            const tokenMock = "jwt-siafsçkflç";
 
-        console.log(`Autenticas com email: ${email}`)
+            // 3. Chamada da função de contexto com o nome correto
+            login(usuarioMock, tokenMock);
+            
+            console.log(`Autenticado com email: ${email}`);
+            
+            // O ideal é redirecionar apenas após o sucesso do login
+            router.push("/home");
 
-        router.push("/home")
-
+        } catch (error) {
+            alert("Erro ao entrar no sistema");
+            console.error(error);
+        }
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4 animate-in fade-in duration-700">
-
-            {/* Container do Card de Login */}
             <div className="w-full max-w-md relative group">
-
-                {/* Efeito de Brilho Externo (Glow) */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
 
                 <div className="relative bg-slate-950 border border-emerald-500/10 rounded-2xl shadow-2xl overflow-hidden">
-                    {/* Linha de destaque no topo */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
 
                     <div className="p-8 md:p-10">
-                        {/* Header do Login */}
                         <div className="mb-10 text-center">
                             <div className="inline-block h-1.5 w-12 bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)] rounded-full mb-4" />
                             <h1 className="text-3xl font-black text-slate-100 uppercase tracking-tighter italic">
@@ -41,11 +51,7 @@ export default function LoginPage() {
                             </p>
                         </div>
 
-                        {/* Formulário */}
                         <form action={handlelogin} className="space-y-8">
-
-
-
                             {/* Campo E-mail */}
                             <div className="group space-y-2">
                                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] group-focus-within:text-emerald-400 transition-colors">
@@ -66,7 +72,7 @@ export default function LoginPage() {
                                     Chave de Acesso
                                 </label>
                                 <input
-                                    name="password"
+                                    name="password" // Este nome deve ser o mesmo usado no formData.get()
                                     type="password"
                                     required
                                     className="w-full bg-transparent border-b-2 border-slate-900 focus:border-emerald-500 p-3 text-slate-100 outline-none transition-all duration-300 placeholder:text-slate-800 font-medium"
@@ -74,7 +80,6 @@ export default function LoginPage() {
                                 />
                             </div>
 
-                            {/* Botão de Ação */}
                             <div className="pt-4">
                                 <button
                                     type="submit"
@@ -92,7 +97,6 @@ export default function LoginPage() {
                                     Esqueci minha chave de acesso
                                 </a>
                             </div>
-
                         </form>
                     </div>
                 </div>

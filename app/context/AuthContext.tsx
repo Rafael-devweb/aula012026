@@ -1,53 +1,70 @@
 'use client'
-import React, {createContext, ReactNode, useContext, useState} from"react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
-export class Usuario{
+export class Usuario {
     constructor(
         public codigo: number,
         public name: string,
-    ){}
+    ) { }
 }
 
-interface AuthContextType{
-    usuario:Usuario | null,
-    token: string  | null,
-    login:(usuario:Usuario, token:string)=>void,
-    logout:()=>void
+interface AuthContextType {
+    usuario: Usuario | null,
+    token: string | null,
+    login: (usuario: Usuario, token: string) => void,
+    logout: () => void
 }
 
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AuthContext = createContext<AuthContextType|undefined>(undefined);
+export function AuthProvider({ children }: { children: ReactNode }) {
+    const [usuario, setUsuario] = useState<Usuario | null>(null);
+    const [token, setToken] = useState<string | null>(null);
+    const router = useRouter();
 
+    useEffect(() => {
+        const usuarioRecover = Cookies.get('usuario'); // Corrigido nome
+        const tokenRecover = Cookies.get('token');
 
-export function AuthProvider({children}: {children:ReactNode}){
-    const[usuario,setUsuario]= useState<Usuario|null>(null);
-    const[token,setToken]= useState<string|null>(null);
+        try {
+            if (usuarioRecover) { // Adicionado check para não dar parse em null
+                setUsuario(JSON.parse(usuarioRecover));
+                setToken(tokenRecover || null);
+            }
 
+            router.push(window.location.pathname);
 
-    const login = (usuario: Usuario, token:string)=>{
+        } catch (e) {
+            console.error("Erro ao restaurar sessão:", e);
+        }
+    }, []);
+
+    const login = (usuario: Usuario, token: string) => {
         setUsuario(usuario);
         setToken(token);
-
+        Cookies.set('usuario', JSON.stringify(usuario), { expires: 7 }); // Corrigido 'expires'
+        Cookies.set('token', token, { expires: 7, secure: true });
     }
 
-    const logout = ()=>{
+    const logout = () => {
         setUsuario(null);
         setToken(null);
-
-
+        Cookies.remove('usuario'); // Corrigido de 'usuarios' para 'usuario'
+        Cookies.remove('token');
     }
 
-    return(
-        <AuthContext.Provider value={{usuario,token,login,logout}}>
+    return (
+        <AuthContext.Provider value={{ usuario, token, login, logout }}>
             {children}
         </AuthContext.Provider>
     )
-
 }
 
-export const useAuth = () =>{
+export const useAuth = () => {
     const context = useContext(AuthContext);
-    if(!context) throw new Error ('useAuth deve ser usado dentro do provioder')
+    if (!context) throw new Error('useAuth deve ser usado dentro do AuthProvider'); // Corrigido texto
 
-        return context;
+    return context;
 }

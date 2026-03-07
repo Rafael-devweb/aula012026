@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+'use client'
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,27 +16,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Mecanica",
-  description: "sistema para mecanica",
-};
+
+
+function AuthGuard({ children }: { children: React.ReactNode }) {
+  const { usuario } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (usuario === null) {
+      router.push("/login");
+    }
+  }, [usuario, router]);
+
+  return <>{children}</>;
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- return (
-    <html lang="pt-BR" className="h-full">
-      {/* Definimos h-full no html e body para que o cálculo de altura funcione */}
-      <body className="h-full bg-slate-950 text-slate-100 antialiased">
-        
-       <AuthProvider> {children} </AuthProvider>
-            
-       
-       
-                
+  return (
+    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+      <body>
+        <AuthProvider>
           
+            {children}
+          
+        </AuthProvider>
       </body>
     </html>
   );
