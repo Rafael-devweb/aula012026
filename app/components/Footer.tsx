@@ -6,9 +6,7 @@ export default function Footer(){
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           
-          {/* Copyright e Identidade - Paleta Chumbo e Verde */}
           <div className="flex items-center gap-3 order-2 md:order-1">
-            {/* Detalhe em Verde Esmeralda (Chumbo e Verde) */}
             <div className="h-4 w-[2px] bg-emerald-500 hidden sm:block"></div>
             <p className="text-slate-500 text-sm font-medium tracking-tight">
               {currentYear} <span className="text-emerald-500 font-black italic tracking-tighter uppercase">Mecânica Green</span>. 

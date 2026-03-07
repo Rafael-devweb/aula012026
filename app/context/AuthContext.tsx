@@ -25,33 +25,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
 
     useEffect(() => {
-        const usuarioRecover = Cookies.get('usuario'); // Corrigido nome
+        debugger;
+        const usuarioRecover = Cookies.get('usuario'); 
         const tokenRecover = Cookies.get('token');
 
-        try {
-            if (usuarioRecover) { // Adicionado check para não dar parse em null
+ if (usuarioRecover && tokenRecover) {
+            try {
                 setUsuario(JSON.parse(usuarioRecover));
-                setToken(tokenRecover || null);
+                setToken(tokenRecover);
+                
+                router.push(window.location.pathname)
+            } catch (e) {
+                console.error(e);
             }
-
-            router.push(window.location.pathname);
-
-        } catch (e) {
-            console.error("Erro ao restaurar sessão:", e);
         }
+
     }, []);
 
     const login = (usuario: Usuario, token: string) => {
+        debugger;
         setUsuario(usuario);
         setToken(token);
-        Cookies.set('usuario', JSON.stringify(usuario), { expires: 7 }); // Corrigido 'expires'
+        Cookies.set('usuario', JSON.stringify(usuario), { expires: 7 }); 
         Cookies.set('token', token, { expires: 7, secure: true });
     }
 
     const logout = () => {
         setUsuario(null);
         setToken(null);
-        Cookies.remove('usuario'); // Corrigido de 'usuarios' para 'usuario'
+        Cookies.remove('usuario'); 
         Cookies.remove('token');
     }
 
@@ -64,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
-    if (!context) throw new Error('useAuth deve ser usado dentro do AuthProvider'); // Corrigido texto
+    if (!context) throw new Error('useAuth deve ser usado dentro do AuthProvider'); 
 
     return context;
 }

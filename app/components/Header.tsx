@@ -73,11 +73,9 @@ export default function Header() {
 
             type="button"
             onClick={logout}
-
-
             className="flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 border border-slate-800 hover:border-emerald-500 text-slate-400 hover:text-slate-950 px-4 py-2 rounded-md font-bold text-xs uppercase tracking-widest transition-all duration-300 active:scale-95 group"
           >
-            <span className="hidden sm:inline">Sair</span>
+            <span>Sair</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
