@@ -8,7 +8,8 @@ export default function LoginPage() {
     const { login } = useAuth();
 
     const handlelogin = async (formData: FormData) => {
-        // 1. Corrigido para bater com o 'name' do input
+
+        
         const email = formData.get("email") as string;
         const senha = formData.get("password") as string; 
 
@@ -16,20 +17,24 @@ export default function LoginPage() {
             // Simulando validação na API
             // 2. Corrigida a variável para evitar erro de referência (usurioMock -> usuarioMock)
             const usuarioMock = new Usuario(1, "Rafael Cândido");
-            const tokenMock = "jwt-siafsçkflç";
+            const tokenMock = "jwt-siafsçkflç"
 
             // 3. Chamada da função de contexto com o nome correto
             login(usuarioMock, tokenMock);
             
+
+            } catch (error) {
+            alert("Erro ao entrar no sistema");
+            
+            console.error(error);
+        } 
+
             console.log(`Autenticado com email: ${email}`);
             
             // O ideal é redirecionar apenas após o sucesso do login
             router.push("/home");
 
-        } catch (error) {
-            alert("Erro ao entrar no sistema");
-            console.error(error);
-        }
+        
     }
 
     return (

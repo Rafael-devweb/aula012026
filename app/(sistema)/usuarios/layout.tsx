@@ -1,5 +1,11 @@
-import Footer from "@/app/components/Footer"
-import Header from "@/app/components/Header"
+'use client'
+import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header";
+import Sidebar from "@/app/components/Sidebar";
+import { useAuth } from "@/app/context/AuthContext";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 
 export default function SistemLayout({
     children 
@@ -7,12 +13,26 @@ export default function SistemLayout({
 }:{
     children:React.ReactNode
 }){
+
+  const { usuario } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    debugger;
+    if (usuario == null) {
+
+      router.push("/login")
+    }
+  })
+
+  if (usuario == null) return null;
+
     return( 
 
 <div className="flex min-h-screen">
           
           {/* Componente Sidebar (Fica fixo ou ao lado) */}
-          {/* <Sidebar />  */}
+           <Sidebar />  
 
           {/* Wrapper do Conteúdo: Flex vertical para empurrar o Footer para baixo */}
           <div className="flex flex-col flex-1 w-full">
