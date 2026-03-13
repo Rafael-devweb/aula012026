@@ -15,7 +15,8 @@ export default function LoginPage() {
         try {
             // Simulando validação na API
             // 2. Corrigida a variável para evitar erro de referência (usurioMock -> usuarioMock)
-            const usuarioMock = new Usuario(1, "Rafael Cândido");
+            const usuarioMock = new Usuario(1, "Rafael Cândido","089090980",true);
+
             const tokenMock = "jwt-siafsçkflç";
 
             // 3. Chamada da função de contexto com o nome correto

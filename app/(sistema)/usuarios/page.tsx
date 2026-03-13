@@ -1,102 +1,122 @@
+'use client'
+import { Usuario } from "@/app/context/AuthContext";
+import { UsuarioMock } from "@/app/mock/usuario";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 export default function Usuarios() {
-  return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      
-      {/* Cabeçalho da Seção */}
-      <div className="flex items-center gap-4">
-        <div className="h-10 w-1.5 bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.5)] rounded-full" />
-        <div>
-          <h2 className="text-3xl font-black text-slate-500 uppercase tracking-tighter italic">
-            Cadastro de <span className="text-emerald-500">Usuários</span>
-          </h2>
-          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-1">
-            Gestão de Acesso e Equipe Técnica
-          </p>
-        </div>
-      </div>
 
-      {/* Card Principal */}
-      <div className="bg-slate-950 border border-emerald-500/10 rounded-2xl shadow-2xl overflow-hidden relative">
-        {/* Detalhe de Brilho no Topo */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
-        
-        <form className="p-8 md:p-12 space-y-10">
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-            
-            {/* Nome do Usuário */}
-            <div className="group space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-focus-within:text-emerald-500 transition-colors">
-                Nome Completo
-              </label>
-              <input 
-                type="text" 
-                className="w-full bg-transparent border-b-2 border-slate-800 focus:border-emerald-500 p-3 text-slate-100 outline-none transition-all duration-300 placeholder:text-slate-800 font-medium"
-                placeholder="Ex: Rafael da Silveira"
-              />
-            </div>
+  const[Usuarios,setUsuarios] =useState<Usuario[]>([]);
+  useEffect(()=>{
 
-            {/* E-mail / Login */}
-            <div className="group space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-focus-within:text-emerald-500 transition-colors">
-                E-mail de Acesso
-              </label>
-              <input 
-                type="email" 
-                className="w-full bg-transparent border-b-2 border-slate-800 focus:border-emerald-500 p-3 text-slate-100 outline-none transition-all duration-300 placeholder:text-slate-800 font-medium"
-                placeholder="mecanico@autofix.com"
-              />
-            </div>
+  },[]);
 
-            {/* Cargo / Responsabilidade */}
-            <div className="group space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-focus-within:text-emerald-500 transition-colors">
-                Função / Cargo
-              </label>
-              <select className="w-full bg-transparent border-b-2 border-slate-800 focus:border-emerald-500 p-3 text-slate-100 outline-none transition-all duration-300 cursor-pointer appearance-none font-medium">
-                <option className="bg-slate-950">Mecânico Líder</option>
-                <option className="bg-slate-950">Auxiliar Técnico</option>
-                <option className="bg-slate-950">Administrador</option>
-                <option className="bg-slate-950">Atendimento</option>
-              </select>
-            </div>
+const carregarDados = async ()=>{
+  try{
 
-            {/* Senha */}
-            <div className="group space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-focus-within:text-emerald-500 transition-colors">
-                Senha de Acesso
-              </label>
-              <input 
-                type="password" 
-                className="w-full bg-transparent border-b-2 border-slate-800 focus:border-emerald-500 p-3 text-slate-100 outline-none transition-all duration-300 placeholder:text-slate-800 font-medium"
-                placeholder="••••••••"
-              />
-            </div>
+    const dados = await UsuarioMock.listarTodos();
+    setUsuarios(dados);
 
-          </div>
 
-          {/* Área de Ações */}
-          <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest max-w-xs">
-              * O usuário terá acesso exclusivo aos dados vinculados à oficina cadastrada.
-            </p>
-            
-            <div className="flex items-center gap-6 w-full sm:w-auto">
-              <button type="button" className="text-[10px] font-black text-slate-500 hover:text-slate-300 uppercase tracking-[0.2em] transition-colors whitespace-nowrap">
-                Limpar Formulário
-              </button>
-              
-              <button className="w-full sm:w-auto relative group overflow-hidden bg-emerald-500 px-12 py-4 rounded-lg transition-all active:scale-95 shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-emerald-500/50">
-                <span className="relative z-10 text-slate-950 font-black uppercase text-xs tracking-[0.2em]">
-                  Salvar Usuário
-                </span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              </button>
-            </div>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  );
+  }catch(error){
+    console.error(error)
+  }
 }
+
+const handlerAlterarStatus = async(usuario:Usuario)=> {
+    try{
+
+      setUsuarios(usuariosAtuais =>
+        usuariosAtuais.map(u=>
+        u.codigo === usuario.codigo
+        ?new Usuario(u.codigo,u.name,u.cpf,!u.ativo)
+        :u
+      ));
+
+    }catch(error){
+      alert("Erro ao alterar o status do usuário")
+    }
+  }
+
+
+return (
+  <div className="min-h-screen bg-slate-950 p-6 text-slate-200">
+    <div className="mb-8 flex items-center justify-between border-b border-slate-800 pb-6">
+      <h1 className="text-2xl font-bold tracking-tight text-white uppercase italic">
+        Gestão de Usuários
+      </h1>
+      <Link 
+        href="/usuarios/novo"
+        className="flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-emerald-500 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+      >
+        + Novo Usuário
+      </Link>
+    </div>
+
+    <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/50 shadow-2xl">
+      <table className="w-full text-left text-sm">
+        <thead className="bg-slate-800/50 text-xs uppercase tracking-wider text-emerald-500">
+          <tr>
+            <th className="px-6 py-4 font-semibold">Código</th>
+            <th className="px-6 py-4 font-semibold">Nome</th>
+            <th className="px-6 py-4 font-semibold">CPF</th>
+            <th className="px-6 py-4 font-semibold">Status</th>
+            <th className="px-6 py-4 font-semibold">Ações</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-800">
+          {Usuarios.map((usuario) => (
+            <tr key={usuario.codigo} className="transition-colors hover:bg-emerald-500/5">
+              <td className="px-6 py-4 font-mono text-emerald-400">#{usuario.codigo}</td>
+              <td className="px-6 py-4 font-medium text-slate-100">{usuario.name}</td>
+              <td className="px-6 py-4 text-slate-400 font-mono">{usuario.cpf}</td>
+              <td className="px-6 py-4">
+                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold border ${
+                  usuario.ativo 
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                    : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                }`}>
+                  {usuario.ativo ? 'Ativo' : 'Inativo'}
+                </span>
+              </td>
+
+              <td className="px-6 py-4">
+                <div className="flex items-center gap-4">
+                  <Link 
+                    href={`/usuarios/${usuario.codigo}/editar`}
+                    className="text-sky-400 hover:text-sky-300 transition-colors font-semibold uppercase text-[11px] tracking-tighter"
+                  >
+                    Editar
+                  </Link>
+                  <button 
+                    onClick={() => handlerAlterarStatus(usuario)}
+                    className={`rounded border px-3 py-1 text-[10px] font-black uppercase tracking-widest transition-all ${
+                      usuario.ativo 
+                        ? 'border-rose-900/50 text-rose-500 hover:bg-rose-500 hover:text-white' 
+                        : 'border-emerald-900/50 text-emerald-500 hover:bg-emerald-500 hover:text-white'
+                    }`}
+                  >
+                    {usuario.ativo ? 'inativar' : 'ativar'}
+                  </button>
+                </div>
+              </td>
+
+              {/* Mantive sua célula extra de ações conforme o original */}
+              <td className="px-6 py-4 text-[10px] text-slate-600 uppercase italic">
+                Ações editar e ativar/inatvar
+              </td>
+            </tr>
+          ))}
+
+          {Usuarios.length === 0 && (
+            <tr>
+              <td className="px-6 py-12 text-center text-slate-500 italic uppercase tracking-widest">
+                nenhum usuario encontrado
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)};
