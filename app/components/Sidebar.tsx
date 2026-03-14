@@ -24,11 +24,11 @@ export default function Sidebar() {
           className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all duration-300 group"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-slate-800 group-hover:bg-emerald-500 shadow-[0_0_8px_transparent] group-hover:shadow-emerald-500/50 transition-all" />
-          <span className="font-bold text-xs uppercase tracking-widest">Dashboard</span>
+          <span className="font-bold text-xs uppercase tracking-widest">Home</span>
         </Link>
 
         <Link
-          href="/ordens"
+          href="/usuario"
           className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all duration-300 group"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-slate-800 group-hover:bg-emerald-500 shadow-[0_0_8px_transparent] group-hover:shadow-emerald-500/50 transition-all" />

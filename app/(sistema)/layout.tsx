@@ -1,6 +1,11 @@
-import Footer from "@/app/components/Footer"
-import Header from "@/app/components/Header"
-import Sidebar from "../components/Sidebar"
+'use client'
+import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header";
+import Sidebar from "@/app/components/Sidebar";
+import { useAuth } from "@/app/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 
 export default function SistemLayout({
     children 
@@ -8,29 +13,43 @@ export default function SistemLayout({
 }:{
     children:React.ReactNode
 }){
-  return (
-  <div className="flex min-h-screen bg-slate-950 text-slate-200">
-    {/* 1. Sidebar - Fora da div principal de conteúdo para ficar à esquerda */}
-    <Sidebar />
 
-    {/* 2. Wrapper do Conteúdo - Flex vertical para Header, Main e Footer */}
-    <div className="flex flex-col flex-1 w-full bg-slate-950/50 backdrop-blur-md">
-      
-      {/* Header fixo no topo ou acompanhando o scroll */}
-      <Header />
+  const { usuario } = useAuth();
+  const router = useRouter();
 
-      {/* O 'flex-1' faz o main crescer e ocupar todo o espaço central */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto">
-        {/* Container centralizado com max-width para não esticar demais */}
-        <div className="max-w-7xl mx-auto animate-in fade-in duration-500">
-          {children}
+  useEffect(() => {
+ 
+    if (usuario == null) {
+
+      router.push("/login")
+    }
+  })
+
+  if (usuario == null) return null;
+
+    return( 
+
+<div className="flex min-h-screen">
+          
+          {/* Componente Sidebar (Fica fixo ou ao lado) */}
+           <Sidebar />  
+
+          {/* Wrapper do Conteúdo: Flex vertical para empurrar o Footer para baixo */}
+          <div className="flex flex-col flex-1 w-full">
+            
+            <Header />
+
+            {/* O 'flex-1' faz o main crescer e ocupar todo o espaço central */}
+            <main className="flex-1 p-4 md:p-8">
+              <div className="max-w-7xl mx-auto">
+                {children}
+              </div>
+            </main>
+
+            <Footer />
+            
+          </div>
         </div>
-      </main>
 
-      {/* Footer no final do conteúdo */}
-      <Footer />
-      
-    </div>
-  </div>
-);
+    )
 }
