@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+
 // Interfaces bem definidas facilitam a manutenção
 interface ClienteFormData {
   nome: string;
@@ -17,9 +18,12 @@ interface ClienteFormData {
 }
 
 export default function RegistroFluxoCliente() {
+
+
+  
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  
+
   // Estado único para o formulário - Performance de renderização
   const [formData, setFormData] = useState<ClienteFormData>({
     nome: '', documento: '', contato: '',
@@ -29,25 +33,27 @@ export default function RegistroFluxoCliente() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     // Simulação de delay de rede (Node logic)
     await new Promise(res => setTimeout(res, 1000));
-    
+
     console.log("Payload Gerado:", formData);
     setLoading(false);
     // router.push('/dashboard');
   };
 
+  
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-emerald-500/30">
-      
+
       {/* Barra de Progresso Superior Sutil */}
       <div className="h-1 w-full bg-slate-900 overflow-hidden">
         <div className={`h-full bg-emerald-500 transition-all duration-700 ${loading ? 'w-full' : 'w-1/3'}`} />
       </div>
 
       <main className="max-w-6xl mx-auto p-6 lg:p-12">
-        
+
         {/* Header Estratégico */}
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="space-y-2">
@@ -61,16 +67,16 @@ export default function RegistroFluxoCliente() {
           </div>
 
           <Link href="/usuarios" className="group flex items-center gap-3 px-6 py-3 bg-slate-900/50 border border-slate-800 rounded-full hover:border-emerald-500/50 transition-all">
-             <span className="text-xs font-bold uppercase tracking-widest group-hover:text-emerald-400 transition-colors">Voltar ao Painel</span>
-             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-             </svg>
+            <span className="text-xs font-bold uppercase tracking-widest group-hover:text-emerald-400 transition-colors">Voltar ao Painel</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
           </Link>
         </header>
 
         {/* Formulário de Alta Performance */}
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* Coluna 01: Identidade */}
           <section className="lg:col-span-5 space-y-8 bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50 backdrop-blur-sm">
             <div className="flex items-center gap-4 mb-4">
@@ -103,7 +109,7 @@ export default function RegistroFluxoCliente() {
             </div>
 
             <div className="pt-6">
-              <button 
+              <button
                 disabled={loading}
                 className="w-full relative group overflow-hidden bg-white hover:bg-emerald-500 py-5 rounded-2xl transition-all active:scale-[0.98] disabled:opacity-50"
               >
@@ -132,8 +138,8 @@ function InputGroup({ label, placeholder, isHighlight = false }: { label: string
       <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] group-focus-within:text-emerald-500 transition-colors">
         {label}
       </label>
-      <input 
-        type="text" 
+      <input
+        type="text"
         placeholder={placeholder}
         className={`
           bg-slate-950 border-2 border-slate-800 rounded-xl p-4 
