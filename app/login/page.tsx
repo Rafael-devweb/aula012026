@@ -3,39 +3,76 @@
 import { useRouter } from "next/navigation";
 import { useAuth, Usuario } from "../context/AuthContext";
 
+import axios from "axios";
+import { useTransition } from "react";
+
+
+interface loginResponse {
+    token: string
+}
+
+
 export default function LoginPage() {
     const router = useRouter();
     const { login } = useAuth();
+    const [isPending, startTransition] = useTransition();
 
     const handlelogin = async (formData: FormData) => {
 
-        
+
         const email = formData.get("email") as string;
-        const senha = formData.get("password") as string; 
+        const senha = formData.get("password") as string;
 
         try {
+
+            debugger
+            //     var loginResult = fetch("http://localhost:8080/auth/login",{
+            //         method : 'POST',
+            //         headers :{
+            //             'Content-Type': 'pplication/json'
+
+            //         },
+            //         body : JSON.stringify({email:email,senha:senha})
+
+            // }); 
+
+
+            //     if(!loginResult){
+            //         alert("Usuario ou senha invalido")
+            //     return;
+
+
+
+
+            var loginResult = await axios.post<loginResponse>('http://localhost:8080/auth/login', { email: email, senha: senha });
+            if (loginResult.status !== 200) {
+                alert("usuario ou senha invalido")
+                return;
+            }
+
+
             // Simulando validação na API
             // 2. Corrigida a variável para evitar erro de referência (usurioMock -> usuarioMock)
-            const usuarioMock = new Usuario(1, "Rafael Cândido","089090980",true);
+            const usuarioMock = new Usuario(1, "Rafael Cândido", "089090980", "true");
 
             const tokenMock = "jwt-siafsçkflç";
 
             // 3. Chamada da função de contexto com o nome correto
             login(usuarioMock, tokenMock);
-            
 
-            } catch (error) {
+
+        } catch (error) {
             alert("Erro ao entrar no sistema");
-            
+
             console.error(error);
-        } 
+        }
 
-            console.log(`Autenticado com email: ${email}`);
-            
-            // O ideal é redirecionar apenas após o sucesso do login
-            router.push("/home");
+        console.log(`Autenticado com email: ${email}`);
 
-        
+        // O ideal é redirecionar apenas após o sucesso do login
+        router.push("/cliente");
+
+
     }
 
     return (

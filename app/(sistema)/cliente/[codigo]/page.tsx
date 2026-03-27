@@ -2,11 +2,11 @@
 'use client'
 
 import Link from "next/link";
-import Usuarioform from "../usuarios/components/UsuariosForm";
+import Usuarioform from "../../usuarios/components/UsuariosForm";
 
 
 export default function CadastroUsuarioLayout() {
-  return (
+ return (
     <div className="flex min-h-screen w-full flex-col bg-slate-950">
       {/* Main Content Wrapper 
           P-4 no mobile, P-10 em telas maiores para um ar de Dashboard Premium 
