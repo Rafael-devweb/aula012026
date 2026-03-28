@@ -13,7 +13,7 @@ interface UsuarioFormProps {
 export default function Usuarioform({ usuariosExistente }: UsuarioFormProps) {
   // ✅ Inicializa o estado apenas uma vez
   const [usuario, setUsuario] = useState<Usuario>(
-    usuariosExistente || new Usuario(0, '', '', "ATIVO")
+    usuariosExistente || new Usuario(null, '', '', "ATIVO")
   );
   
   // ✅ Chamada correta do hook com parênteses
@@ -33,12 +33,12 @@ export default function Usuarioform({ usuariosExistente }: UsuarioFormProps) {
   const handlerSalvar = async (formData: FormData) => {
 
     if (usuariosExistente){
-       var dadosResult = await axios.put<number>('http://localhost:8080/Usuarios/'+usuariosExistente.id, usuario);
+       var dadosResult = await axios.put<number>('http://localhost:8080/usuarios/'+usuariosExistente.id, usuario);
     alert("Usuário salvo com sucesso! Codigo"+dadosResult.data);
     
     }else{
       
-      var dadosResult = await axios.post<number>('http://localhost:8080/Usuarios/',usuario);
+      var dadosResult = await axios.post<number>('http://localhost:8080/usuarios',usuario);
     alert("Usuário salvo com sucesso! Codigo"+dadosResult.data);
       
 
@@ -64,7 +64,7 @@ export default function Usuarioform({ usuariosExistente }: UsuarioFormProps) {
             <input
               type="text"
               required
-              value={usuario.name}
+              value={usuario.name || ''}
               onChange={(e) => handleChange('name', e.target.value)}
               placeholder="Ex: Rafael Candido"
               className="w-full bg-slate-950/50 border border-slate-800 rounded-lg px-4 py-4 text-slate-200 outline-none transition-all focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 placeholder:text-slate-800"

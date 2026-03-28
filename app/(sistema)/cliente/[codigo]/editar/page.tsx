@@ -2,7 +2,7 @@
 'use client'
 
 import Link from "next/link";
-import Usuarioform from "../../usuarios/components/UsuariosForm";
+import Usuarioform from "../../../usuarios/components/UsuariosForm";
 
 
 export default function CadastroUsuarioLayout() {

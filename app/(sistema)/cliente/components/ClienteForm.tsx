@@ -1,14 +1,15 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function ClienteForm({ clienteExistente }: { clienteExistente?: any }) {
   const router = useRouter();
   
   // Estado inicializado como objeto para facilitar a imutabilidade no React
   const [cliente, setCliente] = useState(clienteExistente || {
-    codigo: 0,
+    codigo: null,
     nome: '',
     cpf: '',
     ativo: true
@@ -20,6 +21,18 @@ export default function ClienteForm({ clienteExistente }: { clienteExistente?: a
     console.log("Salvando cliente:", cliente);
     router.push("/usuarios");
     router.refresh();
+
+if (clienteExistente){
+       var dadosResult = await axios.put<number>('http://localhost:8080/clientes/'+clienteExistente.id, cliente);
+    alert("Cliente salvo com sucesso! Codigo"+dadosResult.data);
+    
+    }else{
+      
+      var dadosResult = await axios.post<number>('http://localhost:8080/clientes',cliente);
+    alert("Cliente salvo com sucesso! Codigo"+dadosResult.data);
+      
+    }
+
   };
 
   return (

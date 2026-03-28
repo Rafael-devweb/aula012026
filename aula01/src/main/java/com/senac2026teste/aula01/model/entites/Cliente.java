@@ -1,6 +1,7 @@
 package com.senac2026teste.aula01.model.entites;
 
-import com.senac2026teste.aula01.model.enums.EnumStatusUsuario;
+
+import com.senac2026teste.aula01.model.enums.EnumStatusCliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table
 @Entity
-@Table(name ="usuario")
-public class Usuario {
+public class Cliente {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private String nome;
@@ -23,11 +26,5 @@ public class Usuario {
 
     private String senha;
 
-    private EnumStatusUsuario status = EnumStatusUsuario.ATIVO;
-
-
-
-    }
-
-
-
+    private EnumStatusCliente status = EnumStatusCliente.ATIVO;
+}

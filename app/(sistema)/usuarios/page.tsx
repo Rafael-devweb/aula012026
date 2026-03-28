@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Usuarios() {
 
-  const [Usuarios, setUsuarios] = useState<Usuario[]>([]);
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   useEffect(() => {
     carregarDados();
   }, []);
@@ -15,7 +15,7 @@ export default function Usuarios() {
   const carregarDados = async () => {
     try {
 
-      const dados = await axios.get<Usuario[]>('http:/localhost:8080/usuarios');
+      const dados = await axios.get<Usuario[]>('http://localhost:8080/usuarios');
 
       if (dados.status !== 200) {
         alert("Erro ao carregar dados!")
@@ -43,7 +43,7 @@ export default function Usuarios() {
       }
 
 
-        var dadosResult = await axios.put<number>('http://localhost:8080/Usuarios/' + usuario.id + '/AlterarStatus', novoStatus);
+        var dadosResult = await axios.put<number>('http://localhost:8080/usuarios/' + usuario.id + '/AlterarStatus', novoStatus);
 
         alert("Usuário salvo com sucesso! Codigo" + dadosResult.data);
 
@@ -85,11 +85,13 @@ export default function Usuarios() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
-              {Usuarios.map((usuario) => (
+              {usuarios.map((usuario) => (
                 <tr key={usuario.id} className="transition-colors hover:bg-emerald-500/5">
                   <td className="px-6 py-4 font-mono text-emerald-400">#{usuario.id}</td>
                   <td className="px-6 py-4 font-medium text-slate-100">{usuario.name}</td>
                   <td className="px-6 py-4 text-slate-400 font-mono">{usuario.email}</td>
+                  <td className=" px-6 py-4 font-medium text-slate-100">{usuario.status}</td>
+
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold border ${usuario.status
                       ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
