@@ -2,10 +2,38 @@
 'use client'
 
 import Link from "next/link";
-import Usuarioform from "../../../usuarios/components/UsuariosForm";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { Cliente } from "@/app/mock/cliente";
+import ClienteForm from "../../components/ClienteForm";
 
 
-export default function CadastroUsuarioLayout() {
+
+export default function EditarCliente() {
+
+    const params = useParams()
+    const router = useRouter()
+    const codigo = Number(params.codigo);
+
+    const [cliente, setCliente] = useState<Cliente | null>(null);
+
+    useEffect(() => {
+
+        buscarDados();
+
+    }, []);
+
+    const buscarDados = async () => {
+        const user = await axios.get<Cliente>("http://localhost:8080/clientes/" + codigo);
+
+        if (user.data) setCliente(user.data)
+        else router.push("/clientes")
+    }
+
+
+
  return (
     <div className="flex min-h-screen w-full flex-col bg-slate-950">
       {/* Main Content Wrapper 
@@ -45,7 +73,7 @@ export default function CadastroUsuarioLayout() {
         */}
         <section className="flex-1 animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-out">
           <div className="h-full w-full overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/20 backdrop-blur-sm">
-             <Usuarioform/>
+             <ClienteForm/>
           </div>
         </section>
 

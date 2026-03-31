@@ -22,9 +22,10 @@ public class Cliente {
 
     private String nome;
 
-    private String email;
+    private String documento;
 
-    private String senha;
+
+
 
     private EnumStatusCliente status = EnumStatusCliente.ATIVO;
 }

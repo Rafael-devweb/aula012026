@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 public class ClienteController {
 
     @Autowired
@@ -29,6 +29,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Long> salvar(@RequestBody Cliente cliente) {
         return ResponseEntity.ok(clienteRepository.save(cliente).getId());
+
     }
 
 
@@ -38,9 +39,9 @@ public class ClienteController {
 
 
         if (clienteBanco != null) {
-            clienteBanco.setEmail(cliente.getEmail());
+
             clienteBanco.setNome(cliente.getNome());
-            clienteBanco.setSenha(cliente.getSenha());
+            clienteBanco.setDocumento(cliente.getDocumento());
             clienteBanco.setStatus(cliente.getStatus());
 
             clienteRepository.save(clienteBanco);

@@ -19,19 +19,21 @@ export default function ClienteForm({ clienteExistente }: { clienteExistente?: a
     // Simulando a chamada ao Mock/API de Clientes
     // await ClienteMock.salvar(cliente);
     console.log("Salvando cliente:", cliente);
-    router.push("/usuarios");
-    router.refresh();
+    
 
 if (clienteExistente){
-       var dadosResult = await axios.put<number>('http://localhost:8080/clientes/'+clienteExistente.id, cliente);
+       var dadosResult = await axios.put<number>('http://localhost:8080/cliente/'+clienteExistente.id, cliente);
     alert("Cliente salvo com sucesso! Codigo"+dadosResult.data);
     
     }else{
       
-      var dadosResult = await axios.post<number>('http://localhost:8080/clientes',cliente);
+      var dadosResult = await axios.post<number>('http://localhost:8080/cliente',cliente);
     alert("Cliente salvo com sucesso! Codigo"+dadosResult.data);
       
     }
+
+    router.push("/cliente");
+
 
   };
 

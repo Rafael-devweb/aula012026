@@ -42,9 +42,8 @@ public class UsuarioController {
 
 
         if (usuarioBanco != null) {
-            usuarioBanco.setEmail(usuario.getEmail());
+            usuarioBanco.setCpf(usuario.getCpf());
             usuarioBanco.setNome(usuario.getNome());
-            usuarioBanco.setSenha(usuario.getSenha());
             usuarioBanco.setStatus(usuario.getStatus());
 
             usuarioRepository.save(usuarioBanco);

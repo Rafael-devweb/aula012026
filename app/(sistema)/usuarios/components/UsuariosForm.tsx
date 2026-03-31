@@ -3,7 +3,6 @@ import { Usuario } from "@/app/context/AuthContext";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // ✅ Único import necessário para roteamento
-import { UsuarioMock } from "@/app/mock/usuario";
 import axios from "axios";
 
 interface UsuarioFormProps {
